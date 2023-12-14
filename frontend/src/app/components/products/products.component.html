@@ -1,0 +1,64 @@
+<app-blank title="Ürünler" sectionTitle="Ürünler Listesi">
+
+  <div class="form-group">
+    <button routerLink="/products/add">
+      <i class="fa fa-plus"></i>
+      <div class="col-md-3" style="float: right;">
+      <input type="search" class="form-control" [(ngModel)]="request.search" placeholder="Aranacak Kelime" (keyup)="search()" (search)="getAll(1)"></div>
+    </button>
+  </div>
+
+  <app-table [heads]='["#","Ürünn Resmi","Ürün Adı","Kategoriler","Stok","Fiyat","Oluşturma Tarihi","İşlemler"]'>
+    <tr *ngFor="let product of result.datas let index=index">
+    <td>{{index+1}}</td>
+    <td>
+      <img [src]="'http://localhost:5000/'+product.imageUrl[0].path" alt="">
+    </td>
+    <td>
+      {{product.name}}
+    </td>
+    <td>
+      <ul>
+        <li *ngFor="let category of product.categories">
+        {{category.name}}</li>
+      </ul>
+    </td>
+    <td>
+      {{product.stock}}
+    </td>
+    <td>
+      {{product.price}}
+    </td>
+    <td>{{product.createdDate | date:'dd.MM.yyyy HH:mm:ssss'}} </td>
+    <td>
+      <button class="btn btn-outline-danger btn-sm" (click)="removeById(product._id)"><i class="fa fa-trash"></i></button>
+      <button class="btn btn-outline-warning btn-sm mx-1"  routerLink="/products/update/{{product._id}}"><i class="fa fa-edit"></i></button>
+    </td>
+  </tr>
+  </app-table>
+
+  <select name="pageSize" id="pageSize" [(ngModel)]="request.pageSize" class="form-control text-center" style="width: 65px; float: left;">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="500">500</option>
+    <option value="1000">1000</option>
+  </select>
+  <nav style="float: right;">
+  <ul class="pagination">
+<li class="page-item" [ngClass]="result.isFirstPage?'disabled':''">
+<a class="page-link" (click)="getAll(1)">İlk</a></li>
+<li class="page-item" [ngClass]="result.isFirstPage?'disabled':''">
+  <a class="page-link" (click)="getAll(request.pageNumber-1)">Önceki</a></li>
+  <li class="page-item" *ngFor="let p of pageNumbers">
+
+    <a class="page-link" [ngClass]="result.pageNumber==p?'active':''" (click)="getAll(p)"></a>
+  </li>
+  <li class="page-item" [ngClass]="result.isLastPage?'disabled':''">
+    <a class="page-link" (click)="getAll(request.pageNumber-1)">Sonraki</a></li>
+    <li class="page-item" [ngClass]="result.isLastPage?'disabled':''">
+      <a class="page-link" (click)="getAll(result.totalPageCount)">Son</a></li>
+  </ul></nav>
+</app-blank>

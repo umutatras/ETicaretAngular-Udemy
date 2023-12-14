@@ -1,0 +1,103 @@
+<app-blank title="Ürün Güncelleme" sectionTitle="Ürün Güncelleme">
+  <div class="row center">
+    <div class="col-md-6">
+      <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+        <div class="form-group">
+          <label for="name">Ürün Adı</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            [(ngModel)]="productModel.name"
+            required="false"
+            #name
+            minlength="3"
+            class="form-control"
+            [appValid]="name.validity.valid"
+          />
+          <div class="invalid-feedback">
+            ürün adı en az 3 karakter olmalıdır yada boş olamaz
+          </div>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="categoriesSelect">Kategoriler</label>
+          <select
+            name="categoriesSelect"
+            id="categoriesSelect"
+            class="form-control"
+            [(ngModel)]="productModel.categories"
+            multiple
+            #categoriesSelect
+          >
+            <option *ngFor="let category of categories" [value]="category._id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="stock">Stok</label>
+          <input
+            type="number"
+            name="stock"
+            id="stock"
+            [(ngModel)]="productModel.stock"
+            required="false"
+            #stock
+            min="1"
+            class="form-control"
+            [appValid]="stock.validity.valid"
+          />
+          <div class="invalid-feedback">stok adedi en az 1 olmalı</div>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="price">price</label>
+          <input
+            type="number"
+            name="price"
+            id="price"
+            [(ngModel)]="productModel.price"
+            required="false"
+            #price
+            min="1"
+            class="form-control"
+            [appValid]="price.validity.valid"
+          />
+          <div class="invalid-feedback">price adedi en az 1 olmalı</div>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="images">Resimler</label>
+          <input
+            type="file"
+            name="images"
+            id="images"
+            ngModel
+            multiple
+            class="form-control"
+            (change)="getImages($event)"
+          />
+        </div>
+        <hr />
+        <div class="form-group">
+          <p>Mevcut Resimler</p>
+          <span
+            (click)="deleteImage(productModel._id, i)"
+            *ngFor="let image of productModel.imageUrl; let i = index"
+          >
+            <img
+              [src]="'http://localhost:5000/' + image.imageUrl"
+              class="mx-1"
+              width="100"
+            />
+          </span>
+        </div>
+        <div class="form-group mt-2">
+          <button class="btn btn-primary w-100">Güncelle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-blank>

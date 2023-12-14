@@ -1,0 +1,56 @@
+<app-blank title="Anasayfa" sectionTitle="Ürünler">
+  <div class="row">
+    <div class="col-md-3 cerceve">
+      <ul>
+        <li (click)="changeCategory('','Tümü')" [ngClass]="requestModel.categoryName =='Tümü'?'active':''">Tümü</li>
+        <li (click)="changeCategory(category._id ,category.name)" [ngClass]="requestModel.categoryName?'active':''"  *ngFor="let category of categories">
+        {{category.name}}</li>
+      </ul>
+
+    </div>
+    <div class="col-md-9">
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-7">
+            <label for="">Arama</label>
+            <input type="search" [(ngModel)]="requestModel.search" class="form-control" placeholder="aranacak kelime">
+
+          </div>
+          <div class="col-md-3">
+            <label for="">Fiyat Sıralaması</label>
+            <select [(ngModel)]="requestModel.priceFilter" class="form-control" name="" id="">
+              <option value="0">Seçim Yapınız</option>
+              <option value="1">Artan Fiyat</option>
+              <option value="-1">Azalan Fiyat</option>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <label for="">İşlemler</label>
+            <button class="btn btn-primary" (click)="getAll()">Getir</button>
+          </div>
+        </div>
+
+      </div>
+
+        <div class="row mt-2">
+          <div class="col-md-4" *ngFor="let product of productModel let i=index">
+            <div class="card text-center">
+              <div class="card-header">
+        <h1>{{product.name}}</h1>
+              </div>
+              <div class="card-body">
+                <img [src]="'http://localhost:5000/'+product.imageUrl[0].path">
+                 <hr>
+                <h5>Kalan Adet:{{product.stock}} </h5>
+                <h4>Fiyat: {{product.price}}</h4>
+                <button (click)="addBasket(product._id,product.price)" class="btn btn-outline-success">Sepete Ekle</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</app-blank>

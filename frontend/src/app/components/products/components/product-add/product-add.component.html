@@ -1,0 +1,96 @@
+<app-blank title="Ürün Ekleme" sectionTitle="Ürün Ekleme">
+  <div class="row center">
+    <div class="col-md-6">
+      <form #addForm="ngForm" (ngSubmit)="add(addForm)">
+        <div class="form-group">
+          <label for="name">Ürün Adı</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            ngModel
+            required="false"
+            #name
+            minlength="3"
+            class="form-control"
+            [appValid]="name.validity.valid"
+          />
+          <div class="invalid-feedback">
+            ürün adı en az 3 karakter olmalıdır yada boş olamaz
+          </div>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="categoriesSelect">Kategoriler</label>
+          <select
+            name="categoriesSelect"
+            id="categoriesSelect"
+            class="form-control"
+            ngModel
+            multiple
+            #categoriesSelect
+          >
+            <option *ngFor="let category of categories" [value]="category._id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="stock">Stok</label>
+          <input
+            type="number"
+            name="stock"
+            id="stock"
+            ngModel
+            required="false"
+            #stock
+            min="1"
+            class="form-control"
+            [appValid]="stock.validity.valid"
+          />
+          <div class="invalid-feedback">stok adedi en az 1 olmalı</div>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="price">price</label>
+          <input
+            type="number"
+            name="price"
+            id="price"
+            ngModel
+            required="false"
+            #price
+            min="1"
+            class="form-control"
+            [appValid]="price.validity.valid"
+          />
+          <div class="invalid-feedback">price adedi en az 1 olmalı</div>
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="images">Resimler</label>
+          <input
+            type="file"
+            name="images"
+            id="images"
+            ngModel
+            multiple
+            class="form-control"
+            (change)="getImages($event)"
+          />
+        </div>
+        <hr>
+        <div class="form-group">
+          <p>Seçilen Resimler</p>
+          <span (click)="removeImage(image.name,image.size,i)" *ngFor="let image of imageUrls let i=index">
+            <img [src]="image.imageUrl" class="mx-1" width="100">
+          </span>
+        </div>
+        <div class="form-group mt-2">
+          <button class="btn btn-primary w-100">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-blank>

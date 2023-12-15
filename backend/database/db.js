@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 
-const uri="mongodb+srv://umutatras:123456aa@eticaretdb.rqjrtjb.mongodb.net/?retryWrites=true&w=majority";
+const uri="y";
 
 const connection=()=>{
     mongoose.connect(uri,{
